@@ -9,7 +9,7 @@ Resource          resources.robot
 *** Variables ***
 ${SERVER}               https://free.vidyocloudstaging.com/admin/login.html
 ${BROWSER}              Chrome
-${DELAY}                5
+${DELAY}                2
 ${LOGIN URL}            https://free.vidyocloudstaging.com/admin/login.html
  
  
@@ -24,20 +24,24 @@ Open Browser To Login Page
 
 Open Browser And Log In
     Open Browser        ${SERVER}   ${BROWSER}
+    Set Selenium Speed  ${DELAY}
     Maximize Browser Window
+    Set Selenium Speed  0
     Input Username  pivanov
     Input Password  4esZXdr5
-    Sleep   2 sec
+    Set Selenium Speed  ${DELAY}
     Submit Credentials
-    Sleep   5 sec
+    Set Selenium Speed  0
+    Page Should Contain     Logout
+
+Log Out Admin
+    Click Logout
 
 
- 
- 
 *** Test Cases ***
-Valid Login
-    #Open Browser To Login Page
-    #Close Browser
+Login Admin
     Open Browser And Log In
+    Log Out Admin
+    Sleep   10 sec
     [Teardown]    Close Browser
 

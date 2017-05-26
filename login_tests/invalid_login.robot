@@ -7,6 +7,8 @@ Documentation     A test suite containing tests related to invalid login.
 ...
 ...               This suite also demonstrates using setups and teardowns in
 ...               different levels.
+Library                 Selenium2Library
+
 Suite Setup       Open Browser To Login Page
 Suite Teardown    Close Browser
 Test Setup        Go To Login Page
