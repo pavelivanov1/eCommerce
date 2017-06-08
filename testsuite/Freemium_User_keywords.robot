@@ -74,6 +74,10 @@ User "${username}" logs in with password "${password}"
 User logs out
     Click Logout Button
 
+"${text}" message should be displayed
+    Post login page should be open
+    Page Should Contain     ${text}
+
 *** Test Cases ***
 #Open FreeUser Site
     #Open Browser To Login Page
@@ -102,5 +106,8 @@ User login logout
     When user logs out
     Then login page should be open
 
-
+Verify welcome message on landing page
+    Given browser is opened to login page
+    When user "pavlo.ivanov@globallogic.com" logs in with password "4esZXdr5"
+    Then "Welcome to VidyoCloud!" message should be displayed
 
