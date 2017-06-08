@@ -17,6 +17,8 @@ ${LOGIN PAGE URL}       ${SERVER URL}/login-widget
 ${BROWSER}              Chrome
 ${DELAY}                2
 #${SIGNUP PAGE URL}      https://free.vidyocloudstaging.com/admin/login.html
+${FREEUSER}             pavlo.ivanov@globallogic.com
+${FREEUSER PASSWORD}    4esZXdr5
 
 *** Keywords ***
 
@@ -101,13 +103,13 @@ Sign up is impossible with all fields empty
 
 User login logout
     Given browser is opened to login page
-    When user "pavlo.ivanov@globallogic.com" logs in with password "4esZXdr5"
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then post login page should be open
     When user logs out
     Then login page should be open
 
 Verify welcome message on landing page
     Given browser is opened to login page
-    When user "pavlo.ivanov@globallogic.com" logs in with password "4esZXdr5"
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then "Welcome to VidyoCloud!" message should be displayed
 
