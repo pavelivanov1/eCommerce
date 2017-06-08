@@ -15,6 +15,7 @@ ${SIGNUP PAGE URL}      ${SERVER URL}/signup
 ${BROWSER}              Chrome
 ${DELAY}                2
 ${EMPTY STRING}         ${EMPTY}
+${POST LOGIN PAGE}       ${SERVER URL}/my-account
 
 
 
@@ -38,6 +39,12 @@ Signup Page Is Open
     Title Should Be           VidyoCloud eCommerce Portal
     Page Should Contain       Start Video Meetings For FREE
 
+Post Login Page Is Open
+    Wait Until Page Does Not Contain Element       xpath=//input[contains(@value,'Sign In')]    20
+    Wait Until Page Contains       Here's the link to your personal meeting room!    20
+    Location Should Contain   ${POST LOGIN PAGE}
+    #Signing in to eCommerce-portal-staging
+
 Register button is disabled
     Location Should Contain   ${SIGNUP PAGE URL}
     Page Should Contain Button  xpath=//button[contains(text(),'Register') and contains(@id,'user-register') and contains(@disabled,'')]
@@ -48,20 +55,21 @@ Empty all registration fields
     Input Text    xpath=//input[@id='lastName']    ${EMPTY STRING}
     Input Text    xpath=//input[@id='company']    ${EMPTY STRING}
     Input Text    xpath=//input[@id='emailAddress']    ${EMPTY STRING}
-    Select From List by Value   xpath=//select[@id='country']   defualtCountry
+    Select From List by Value   xpath=//select[@id='country']   US
+    #Sleep   5 sec
     Input Text    xpath=//input[@id='phoneNumber']    ${EMPTY STRING}
 
 
 Input Username
     [Arguments]    ${username}
-    Input Text    username-inputEl    ${username}
+    Input Text    xpath=//input[@name='username']    ${username}
 
 Input Password
     [Arguments]    ${password}
-    Input Text    textfield-1026-inputEl    ${password}
+    Input Text    xpath=//input[@name='password']    ${password}
 
 Submit Credentials
-    Click Element    xpath=//span[contains(text(),'Login')]
+    Click Signin Link
 
 Click Logout
     Click Element   xpath=//a[contains(text(),'Logout')]
@@ -69,8 +77,15 @@ Click Logout
 Click Signup Link
     Click Element   xpath=//a[contains(text(),'Click here to Sign Up')]
 
+Click Signin Link
+    Click Element   xpath=//input[contains(@value,'Sign In')]
+
 Click Signup Button
     Click Element   xpath=//a[text() = 'Sign up']
+
+Click Logout Button
+    Click Element   xpath=//a[contains(@class, 'dropdown-toggle')]
+    Click Element   xpath=//a[text() = 'Logout']
 
 Open Browser To Login Page
     Open Browser        ${SERVER URL}   ${BROWSER}
