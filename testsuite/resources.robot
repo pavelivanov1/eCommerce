@@ -30,9 +30,11 @@ Go To Signup Page
     Signup Page Is Open
 
 Login Page Is Open
+    Wait Until Page Contains    Sign In to VidyoCloud
     Location Should Contain   ${LOGIN PAGE URL}
     Title Should Be           VidyoCloud eCommerce Portal
-    Page Should Contain       Sign In to VidyoCloud
+
+    #Page Should Contain       Sign In to VidyoCloud
 
 Signup Page Is Open
     Location Should Contain   ${SIGNUP PAGE URL}
@@ -40,8 +42,8 @@ Signup Page Is Open
     Page Should Contain       Start Video Meetings For FREE
 
 Post Login Page Is Open
-    Wait Until Page Does Not Contain Element       xpath=//input[contains(@value,'Sign In')]    20
-    Wait Until Page Contains       Here's the link to your personal meeting room!    20
+    Wait Until Page Does Not Contain Element       xpath=//input[contains(@value,'Sign In')]    30
+    Wait Until Page Contains       Here's the link to your personal meeting room!    30
     Location Should Contain   ${POST LOGIN PAGE}
     #Signing in to eCommerce-portal-staging
 

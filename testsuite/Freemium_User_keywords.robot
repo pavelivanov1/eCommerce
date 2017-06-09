@@ -80,6 +80,10 @@ User logs out
     Post login page should be open
     Page Should Contain     ${text}
 
+Vidyo logo should redirect user to main Vidyo page
+    Post login page should be open
+    Page should contain element       xpath=//a[@href='https://www.vidyo.com/']
+
 *** Test Cases ***
 #Open FreeUser Site
     #Open Browser To Login Page
@@ -112,4 +116,10 @@ Verify welcome message on landing page
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then "Welcome to VidyoCloud!" message should be displayed
+    Then user logs out
 
+Verify Vidyo logo redirects user to www.vidyo.com
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    Then Vidyo logo should redirect user to main Vidyo page
+    Then user logs out
