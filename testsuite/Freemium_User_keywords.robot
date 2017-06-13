@@ -18,8 +18,8 @@ ${LOGIN PAGE URL}       ${SERVER URL}/login-widget
 ${BROWSER}              Chrome
 ${DELAY}                2
 #${SIGNUP PAGE URL}      https://free.vidyocloudstaging.com/admin/login.html
-${FREEUSER}             pavlo.ivanov@globallogic.com
-${FREEUSER PASSWORD}    4esZXdr5
+${FREEUSER}             ecommerce.freemium@gmail.com
+${FREEUSER PASSWORD}    V!dy0433
 
 *** Keywords ***
 
@@ -52,6 +52,12 @@ User clicks signup link
 User clicks signup button
     Click Signup Button
 
+User clicks Forgot Password link
+    Click Forgot Password link
+
+
+
+
 Login page should be open
     Login Page Is Open
 
@@ -63,6 +69,9 @@ Register button should be disabled
 
 Post login page should be open
     Post login page is open
+
+Reset password page should be open
+    Reset password page is open
 
 
 User leaves all signup fields empty
@@ -76,6 +85,12 @@ User "${username}" logs in with password "${password}"
 
 User logs out
     Click Logout Button
+
+User sends reset password email to "${useremail}"
+    Send reset password email to "${useremail}"
+
+User receives email with a link for recovery of password
+    Check email with a link for recovery of password
 
 "${text}" message should be displayed
     Post login page should be open
@@ -150,3 +165,12 @@ Sign in with invalid password
     When user "${FREEUSER}" logs in with password "!@#$%^&~*()_+}{[]:"\|"
     #Sleep   5 sec
     Then "Sign in failed!" error should be displayed
+
+Check forgotten password link with proper email id
+    Given browser is opened to login page
+    When user clicks Forgot Password link
+    Then reset password page should be open
+    When user sends reset password email to "${FREEUSER}"
+    Then reset password email sent page is open
+    And user receives email with a link for recovery of password
+    Sleep   5 sec
