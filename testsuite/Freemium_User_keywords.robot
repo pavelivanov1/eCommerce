@@ -8,6 +8,7 @@ Resource                resources.robot
 Suite Setup       Open Browser To Login Page
 Suite Teardown    Close Browser
 Test Setup        Go To Login Page
+#Test Teardown     User logs out
 
 
 
@@ -80,6 +81,11 @@ User logs out
     Post login page should be open
     Page Should Contain     ${text}
 
+"${text}" error should be displayed
+    Login page should be open
+    Wait Until Page Contains       ${text}    30
+
+
 Vidyo logo should redirect user to main Vidyo page
     Post login page should be open
     Page should contain element       xpath=//a[@href='https://www.vidyo.com/']
@@ -116,10 +122,19 @@ Verify welcome message on landing page
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then "Welcome to VidyoCloud!" message should be displayed
-    Then user logs out
+    And user logs out
 
 Verify Vidyo logo redirects user to www.vidyo.com
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then Vidyo logo should redirect user to main Vidyo page
-    Then user logs out
+    And user logs out
+
+
+# ------ Freemiun user login ---------
+
+Sign in with invalid credentials
+    Given browser is opened to login page
+    When user "!@#$%^&~*()_+}{[]:"\|" logs in with password "!@#$%^&~*()_+}{[]:"\|"
+    Sleep   5 sec
+    Then "Sign in failed!" error should be displayed
