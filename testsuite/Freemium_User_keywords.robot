@@ -136,5 +136,17 @@ Verify Vidyo logo redirects user to www.vidyo.com
 Sign in with invalid credentials
     Given browser is opened to login page
     When user "!@#$%^&~*()_+}{[]:"\|" logs in with password "!@#$%^&~*()_+}{[]:"\|"
-    Sleep   5 sec
+    #Sleep   5 sec
+    Then "Sign in failed!" error should be displayed
+
+Sign in with invalid user name
+    Given browser is opened to login page
+    When user "!@#$%^&~*()_+}{[]:"\|" logs in with password "${FREEUSER PASSWORD}"
+    #Sleep   5 sec
+    Then "Sign in failed!" error should be displayed
+
+Sign in with invalid password
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "!@#$%^&~*()_+}{[]:"\|"
+    #Sleep   5 sec
     Then "Sign in failed!" error should be displayed
