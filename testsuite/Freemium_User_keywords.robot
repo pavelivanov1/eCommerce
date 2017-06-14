@@ -29,8 +29,8 @@ Open Browser And Log In
     Set Selenium Speed  ${DELAY}
     Maximize Browser Window
     Set Selenium Speed  0
-    Input Username  pavlo.ivanov@globallogic.com
-    Input Password  4esZXdr5
+    Input Username  ${FREEUSER}
+    Input Password  ${FREEUSER PASSWORD}
     Set Selenium Speed  ${DELAY}
     Submit Credentials
     Set Selenium Speed  0
@@ -73,6 +73,9 @@ Post login page should be open
 Reset password page should be open
     Reset password page is open
 
+Change password page should be open
+    Change password page is open
+
 
 User leaves all signup fields empty
     Empty all registration fields
@@ -82,6 +85,7 @@ User "${username}" logs in with password "${password}"
     Input username    ${username}
     Input password    ${password}
     Submit credentials
+    Post Login Page Is Open
 
 User logs out
     Click Logout Button
@@ -108,6 +112,26 @@ User presses send reset email button with empty email field
 Vidyo logo should redirect user to main Vidyo page
     Post login page should be open
     Page should contain element       xpath=//a[@href='https://www.vidyo.com/']
+
+User changes current password "${olduserpass}" to "${userpass}"
+    Click Change Password Button
+    Change Password page should be open
+    Type old password "${olduserpass}"
+    Type new password "${userpass}"
+    Submit new password
+    Wait Until Page Does Not Contain Element       xpath=//button[@id='password-change-submit']    30
+    Post login page should be open
+
+Type old password "${userpass}"
+    Input Text    xpath=//input[@id='oldPassword']    ${userpass}
+
+Type new password "${userpass}"
+    Input Text    xpath=//input[@id='newPassword']    ${userpass}
+    Input Text    xpath=//input[@id='confirmPassword']    ${userpass}
+
+Submit new password
+    Page should contain element      xpath=//p[contains(text(),'Password looks good! Click the button to change.')]
+    Click element   xpath=//button[@id='password-change-submit']
 
 *** Test Cases ***
 #Open FreeUser Site
@@ -200,3 +224,13 @@ Check error message on login failure cases
     #Sleep   5 sec
     Then login page should be open
     And "Sign in failed!" error should be displayed
+
+Change password and sign in with new password
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    And user changes current password "${FREEUSER PASSWORD}" to "V!dy0432"
+    And user logs out
+    When user "${FREEUSER}" logs in with password "V!dy0432"
+    Then post login page should be open
+    And user changes current password "V!dy0432" to "${FREEUSER PASSWORD}"
+    And user logs out

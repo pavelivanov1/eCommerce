@@ -21,6 +21,7 @@ ${EMPTY STRING}                     ${EMPTY}
 ${POST LOGIN PAGE}                  ${SERVER URL}/my-account
 ${FORGOT PASSWORD PAGE}             ${SERVER URL}/forgot-password
 ${RESET PASSWORD EMAIL SENT PAGE}   ${SERVER URL}/reset-email-sent
+${CHANGE PASSWORD PAGE}             ${SERVER URL}/change-password
 
 ${GOOGLE MAIL LOGIN PAGE}           https://gmail.com
 
@@ -64,6 +65,11 @@ Reset password email sent page is open
     Wait Until Page Contains   You will receive an email shortly.
     Wait Until Page Contains   Please follow the provided instructions to reset your password.
     Location Should Contain   ${RESET PASSWORD EMAIL SENT PAGE}
+
+Change password page is open
+    Wait Until Page Contains Element       xpath=//h1[contains(text(), 'Change password')]
+    Location Should Contain   ${CHANGE PASSWORD PAGE}
+
 
 Send reset password email to "${useremail}"
     Input Text    xpath=//input[@id='emailAddress']    ${useremail}
@@ -150,6 +156,10 @@ Click Forgot Password link
 Click Logout Button
     Click Element   xpath=//a[contains(@class, 'dropdown-toggle')]
     Click Element   xpath=//a[text() = 'Logout']
+
+Click Change Password Button
+    Click Element   xpath=//a[contains(@class, 'dropdown-toggle')]
+    Click Element   xpath=//a[text() = 'Change Password']
 
 Open Browser To Login Page
     Open Browser        ${SERVER URL}   ${BROWSER}
