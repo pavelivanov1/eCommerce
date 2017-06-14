@@ -69,6 +69,12 @@ Send reset password email to "${useremail}"
     Input Text    xpath=//input[@id='emailAddress']    ${useremail}
     Click Element   xpath=//button[@id='password-change-submit']
 
+Clear reset email field
+    Input Text    xpath=//input[@id='emailAddress']    ${EMPTY STRING}
+
+Press send reset email button
+    Click Element   xpath=//button[@id='password-change-submit']
+
 Check email with a link for recovery of password
     Log in to Google Mail as "${FREEUSER}" with password "${FREEUSER PASSWORD}"
     Click Element   xpath=//tr//span[contains(@email, 'noreply@vidyo.com')]/../../..//span[contains(text(), 'Password Reset')]

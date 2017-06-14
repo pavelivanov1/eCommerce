@@ -92,6 +92,10 @@ User sends reset password email to "${useremail}"
 User receives email with a link for recovery of password
     Check email with a link for recovery of password
 
+User presses send reset email button with empty email field
+    Clear reset email field
+    Press send reset email button
+
 "${text}" message should be displayed
     Post login page should be open
     Page Should Contain     ${text}
@@ -152,7 +156,8 @@ Sign in with invalid credentials
     Given browser is opened to login page
     When user "!@#$%^&~*()_+}{[]:"\|" logs in with password "!@#$%^&~*()_+}{[]:"\|"
     #Sleep   5 sec
-    Then "Sign in failed!" error should be displayed
+    Then login page should be open
+    And "Sign in failed!" error should be displayed
 
 Sign in with invalid user name
     Given browser is opened to login page
@@ -173,4 +178,25 @@ Check forgotten password link with proper email id
     When user sends reset password email to "${FREEUSER}"
     Then reset password email sent page is open
     And user receives email with a link for recovery of password
-    Sleep   5 sec
+    #Sleep   5 sec
+
+Check forgotten password link without email id
+    Given browser is opened to login page
+    When user clicks Forgot Password link
+    Then reset password page should be open
+    When user presses send reset email button with empty email field
+    Then reset password page should be open
+
+Sign in with the credentials which are passed through the proper signup and password set steps
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    Then post login page should be open
+    When user logs out
+    Then login page should be open
+
+Check error message on login failure cases
+    Given browser is opened to login page
+    When user "!@#$%^&~*()_+}{[]:"\|" logs in with password "!@#$%^&~*()_+}{[]:"\|"
+    #Sleep   5 sec
+    Then login page should be open
+    And "Sign in failed!" error should be displayed
