@@ -67,8 +67,8 @@ Signup page should be open
 Register button should be disabled
     Register button is disabled
 
-Post login page should be open
-    Post login page is open
+My account page should be open
+    My account page is open
 
 Reset password page should be open
     Reset password page is open
@@ -85,7 +85,7 @@ User "${username}" logs in with password "${password}"
     Input username    ${username}
     Input password    ${password}
     Submit credentials
-    Post Login Page Is Open
+
 
 User logs out
     Click Logout Button
@@ -101,7 +101,7 @@ User presses send reset email button with empty email field
     Press send reset email button
 
 "${text}" message should be displayed
-    Post login page should be open
+    My account page should be open
     Page Should Contain     ${text}
 
 "${text}" error should be displayed
@@ -110,7 +110,7 @@ User presses send reset email button with empty email field
 
 
 Vidyo logo should redirect user to main Vidyo page
-    Post login page should be open
+    My account page should be open
     Page should contain element       xpath=//a[@href='https://www.vidyo.com/']
 
 User changes current password "${olduserpass}" to "${userpass}"
@@ -120,7 +120,7 @@ User changes current password "${olduserpass}" to "${userpass}"
     Type new password "${userpass}"
     Submit new password
     Wait Until Page Does Not Contain Element       xpath=//button[@id='password-change-submit']    30
-    Post login page should be open
+    My account page should be open
 
 Type old password "${userpass}"
     Input Text    xpath=//input[@id='oldPassword']    ${userpass}
@@ -132,6 +132,17 @@ Type new password "${userpass}"
 Submit new password
     Page should contain element      xpath=//p[contains(text(),'Password looks good! Click the button to change.')]
     Click element   xpath=//button[@id='password-change-submit']
+
+User opens browser "${browser}" to "${url}"
+    Open Browser   ${url}  ${browser}
+    Maximize Browser Window
+
+
+User closes browser
+    Close browser
+
+User opens login page
+    Go to   ${LOGIN PAGE URL}
 
 *** Test Cases ***
 #Open FreeUser Site
@@ -157,7 +168,7 @@ Sign up is impossible with all fields empty
 User login logout
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
-    Then post login page should be open
+    Then My account page should be open
     When user logs out
     Then login page should be open
 
@@ -172,6 +183,8 @@ Verify Vidyo logo redirects user to www.vidyo.com
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
     Then Vidyo logo should redirect user to main Vidyo page
     And user logs out
+
+
 
 
 # ------ Freemiun user login ---------
@@ -214,7 +227,7 @@ Check forgotten password link without email id
 Sign in with the credentials which are passed through the proper signup and password set steps
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
-    Then post login page should be open
+    Then My account page should be open
     When user logs out
     Then login page should be open
 
@@ -228,9 +241,39 @@ Check error message on login failure cases
 Change password and sign in with new password
     Given browser is opened to login page
     When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    And My Account page is open
     And user changes current password "${FREEUSER PASSWORD}" to "V!dy0432"
     And user logs out
     When user "${FREEUSER}" logs in with password "V!dy0432"
-    Then post login page should be open
+    Then My account page should be open
     And user changes current password "V!dy0432" to "${FREEUSER PASSWORD}"
     And user logs out
+
+Sign in multiple times with same user
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    And My Account page is open
+    And user closes browser
+    And user opens browser "chrome" to "${LOGIN PAGE URL}"
+    And browser is opened to login page
+    And user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    Then My Account page is open
+    Then user logs out
+    And user closes browser
+    When user opens browser "Chrome" to "${LOGIN PAGE URL}"
+    And user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    Then My Account page is open
+    Then user logs out
+
+Sign in multiple times with different user
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    And My Account page is open
+    When user opens login page
+    Then My Account page is open
+    Then user logs out
+
+Open free account page
+    Given browser is opened to login page
+    When user "${FREEUSER}" logs in with password "${FREEUSER PASSWORD}"
+    Then My Free Account page is open

@@ -18,7 +18,7 @@ ${FREEUSER PASSWORD}                V!dy0433
 ${BROWSER}                          Chrome
 ${DELAY}                            2
 ${EMPTY STRING}                     ${EMPTY}
-${POST LOGIN PAGE}                  ${SERVER URL}/my-account
+${MY ACCOUNT PAGE}                  ${SERVER URL}/my-account
 ${FORGOT PASSWORD PAGE}             ${SERVER URL}/forgot-password
 ${RESET PASSWORD EMAIL SENT PAGE}   ${SERVER URL}/reset-email-sent
 ${CHANGE PASSWORD PAGE}             ${SERVER URL}/change-password
@@ -40,7 +40,7 @@ Go To Signup Page
     Signup Page Is Open
 
 Login Page Is Open
-    Wait Until Page Contains    Sign In to VidyoCloud
+    Wait Until Page Contains    Sign In to VidyoCloud       30
     Location Should Contain   ${LOGIN PAGE URL}
     Title Should Be           VidyoCloud eCommerce Portal
 
@@ -51,11 +51,18 @@ Signup Page Is Open
     Title Should Be           VidyoCloud eCommerce Portal
     Page Should Contain       Start Video Meetings For FREE
 
-Post Login Page Is Open
+My Account Page Is Open
     Wait Until Page Does Not Contain Element       xpath=//input[contains(@value,'Sign In')]    30
     Wait Until Page Contains       Here's the link to your personal meeting room!    30
-    Location Should Contain   ${POST LOGIN PAGE}
+    Location Should Contain   ${MY ACCOUNT PAGE}
     #Signing in to eCommerce-portal-staging
+
+My Free Account Page Is Open
+    Wait Until Page Does Not Contain Element       xpath=//input[contains(@value,'Sign In')]    30
+    Wait Until Page Contains       Here's the link to your personal meeting room!    30
+    get text  xpath=//a[contains(text(),'beta.vidyo.com/join/')]
+    Location Should Contain   ${MY ACCOUNT PAGE}
+
 
 Reset password page is open
     Wait Until Page Contains Element       xpath=//button[@id = 'password-change-submit']
